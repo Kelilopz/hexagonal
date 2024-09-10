@@ -2,6 +2,7 @@
 const express = require('express');
 const UserController = require('../controllers/userController');
 const UserValidator = require('../validator/userValidator');
+const {auth} = require('../middlewares/authenticateToken');
 
 const router = express.Router();
 const userController = new UserController();
@@ -12,6 +13,7 @@ router.post('/', userValidator.validateUserData(), (req, res) => userController.
 router.put('/:id', userValidator.validateUserUpdateDataById(), (req, res) => userController.updateUser(req, res));
 router.delete('/:id', userValidator.validateUserId(), (req, res) => userController.deleteUser(req, res));
 router.get('/search', (req, res) => userController.searchUsers(req, res));
+router.post('/login', userValidator.validateUserData(), (req, res) => userController.createUser(req, res));
 
 
 module.exports = router;

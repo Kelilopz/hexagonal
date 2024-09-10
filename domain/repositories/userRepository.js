@@ -20,6 +20,29 @@ class UserRepository {
         }
     }
 
+    async getNick(body) {
+        try {
+            const user = new User();
+        let {nick} = body;
+        let query = {
+            $match: {
+                nick},
+                $project: {
+                    _id:0,
+                    emmail:0}
+        } }catch (error) {
+            throw new Error(JSON.stringify({status: 400, message: 'user repository'}));
+        }
+    }
+
+    async getPassword(password,user) {
+        let {password:pass} = user
+        delete user.password
+        const isMatch = await bcrypt.compare(password,pass);
+        if(!isMatch) throw new Error(JSON.stringify({status: 400, message:"No autorizado"}));
+        return jwt.sign(user,process.env.JWT_SECRET,{ expiresIn: '1h'})
+    }
+
     async updateById(id, updateData) {
         try {
             const user = new User();
@@ -37,6 +60,15 @@ class UserRepository {
         } catch (error) {
             throw new Error(JSON.stringify({status: 404, message: 'Error deleting user'}));
         }
+    }
+
+    
+    async getPassword(password,user){
+        let {password:pass} = user
+        delete user.password
+        const isMatch = await bcrypt.compare(password , pass);
+        if(!isMatch) throw new Error(JSON.stringify({status: 400, message:"No autorizado"}));
+        return jwt.sing(user,process.env.JWT_SECRET,{ expiresIn: '1h'})
     }
 
     async searchByName(name) {
