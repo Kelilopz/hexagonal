@@ -22,13 +22,16 @@ const createServer = (__dirname) => {
         next();
     }, userRoutes);
 
-    app.use('/products', productRouters)
+    app.use('/home',sessionAuth,aut,(req,res,next)=>{
+        req.__dirname = __dirnames;
+        next();
+    },productRoutes)
+
+    app.use('/products', productRouters);
+
     return app;
 
     
 };
-
-    
-
 
 module.exports = createServer;
