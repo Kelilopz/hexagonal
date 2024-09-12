@@ -4,7 +4,9 @@ const userRoutes = require('../../application/routes/userRoutes');
 const productRouters = require('../../application/routes/productRouters');
 const { jsonParseErrorHandler } = require('../middlewares/errorHandling');
 const { limiTotal } = require('../middlewares/rateLimit');
-
+const path = require ('path');
+const sessionAuth = require('express').Router();
+const {auth} = require('../../application/middlewares/authenticateToken');
 
 const createServer = (__dirname) => {
     const app = express();
@@ -22,10 +24,10 @@ const createServer = (__dirname) => {
         next();
     }, userRoutes);
 
-    app.use('/home',sessionAuth,aut,(req,res,next)=>{
+    app.use('/home',sessionAuth,auth,(req,res,next)=>{
         req.__dirname = __dirnames;
         next();
-    },productRoutes)
+    },productRouters)
 
     app.use('/products', productRouters);
 

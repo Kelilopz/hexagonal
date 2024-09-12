@@ -40,7 +40,7 @@ class UserRepository {
         delete user.password
         const isMatch = await bcrypt.compare(password,pass);
         if(!isMatch) throw new Error(JSON.stringify({status: 400, message:"No autorizado"}));
-        return jwt.sign(user,process.env.JWT_SECRET,{ expiresIn: '1h'})
+        return jwt.sign(user,process.env.KEY_SECRET,{ expiresIn: '1h'})
     }
 
     async updateById(id, updateData) {
@@ -68,7 +68,7 @@ class UserRepository {
         delete user.password
         const isMatch = await bcrypt.compare(password , pass);
         if(!isMatch) throw new Error(JSON.stringify({status: 400, message:"No autorizado"}));
-        return jwt.sing(user,process.env.JWT_SECRET,{ expiresIn: '1h'})
+        return jwt.sing(user,process.env.KEY_SECRET,{ expiresIn: '1h'})
     }
 
     async searchByName(name) {
