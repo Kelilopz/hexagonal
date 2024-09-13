@@ -30,7 +30,10 @@ class UserRepository {
                 $project: {
                     _id:0,
                     emmail:0}
-        } }catch (error) {
+
+         }
+         return(query.toArray())
+        }catch (error) {
             throw new Error(JSON.stringify({status: 400, message: 'user repository'}));
         }
     }

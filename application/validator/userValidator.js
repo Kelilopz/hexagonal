@@ -27,7 +27,7 @@ class UserValidator {
     validateUserLogin = () => {
         return [
             body('nick').notEmpty().isString().withMessage('Send the nickname you will have in the system'),
-            body('password').notEmpty().isEmail().withMessage('Send the password'),
+            body('password').notEmpty().isLength({min:8}).isString().withMessage('Mayor a 8'),
         
         ];
     };

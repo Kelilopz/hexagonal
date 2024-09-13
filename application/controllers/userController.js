@@ -43,6 +43,7 @@ class UserController {
             req.session.token =`Bearer ${token}`;
             res.status(201).json({message: "Logeado...", token: `Bearer ${token}`});
         } catch (error) {
+            console.log(error)
             const errorObj = JSON.parse(error.message);
             res.status(errorObj.status).json({ message: errorObj.message });
         }
